@@ -11,9 +11,10 @@ router.get('/profileSignUp', (req, res) => {
 })
 router.post('/profileSignUp', (req, res) => {
   const { firstName,
-    lastName,
+    lastName,UserName,
     phoneNumber, Address, Notification, orderHistory, Ratings, Favorites,StateP,
     email, imageUri } = req.body
+    // console.log(req.body)
 
   const NewProfile = new ProfileSchema({
     UserName: UserName,
