@@ -6,6 +6,12 @@ const ProfileSchema = new Schema({
   lastName: { type: String, required: true },
   phoneNumber: { type: String, required: true },
   email: { type: String, required: true },
+  Ratings: { type: String },
+  StateP: { type: String },
+  Address: { type: [String] },
+  Notification: { type: [String] },
+  orderHistory: { type: [String] },
+  Favorites: { type: [String]},
   imageUri: { type: String },
   createdAt: { type: Date, default: Date.now },
 });

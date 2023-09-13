@@ -15,4 +15,5 @@ const databaseSchema = new Schema({
 })
 
 
+
 module.exports = mongoose.model("ShoppingItems", databaseSchema)
