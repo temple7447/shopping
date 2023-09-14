@@ -90,7 +90,7 @@ router.put('/profileSignUp', (req, res) => {
 });
 
 
-router.put('/profileSignUp/Address', (req, res) => {
+router.post('/profileSignUp/Address', (req, res) => {
   const { id, Address } = req.body;
 
   ProfileSchema.findById({ _id:id})
