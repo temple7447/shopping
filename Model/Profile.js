@@ -1,6 +1,59 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const AddressSchema = new Schema({
+  address: String, 
+  firstName: String,
+ lastName: String,
+  State: String,
+  city: String,
+  phoneNumber: String,
+  timestamp: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+
+
+
+const orderHistorySchema = new Schema({
+  Categories: String,
+  SubCategories: String,
+  Description: String,
+  Title: String,
+  Price:Number,
+  Images: [String],
+  Quantity: Number,
+  timestamp: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+const FavoritesSchema = new Schema({
+  Categories: String,
+  SubCategories: String,
+  Description: String,
+  Title: String,
+  Price:Number,
+  Images: [String],
+  Quantity: Number,
+  timestamp: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+
+const NotificationSchema = new Schema({
+  message: String, 
+  timestamp: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
 const ProfileSchema = new Schema({
   firstName: { type: String },
   lastName: { type: String  },
@@ -9,10 +62,10 @@ const ProfileSchema = new Schema({
   email: { type: String, required: true },
   Ratings: { type: String },
   StateP: { type: String },
-  Address: { type: [String] },
-  Notification: { type: [String] },
-  orderHistory: { type: [String] },
-  Favorites: { type: [String]},
+  Address: [AddressSchema],
+  Notification:  [NotificationSchema],
+  orderHistory:  [orderHistorySchema],
+  Favorites: [FavoritesSchema],
   imageUri: { type: String },
   createdAt: { type: Date, default: Date.now },
 });
