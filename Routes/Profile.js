@@ -91,9 +91,9 @@ router.put('/profileSignUp', (req, res) => {
 
 
 router.put('/profileSignUp/Address', (req, res) => {
-  const { id, Address } = req.body;
+  const { _id, Address } = req.body;
 
-  ProfileSchema.findById({ _id:id})
+  ProfileSchema.findById({ _id})
     .then((user) => {
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
