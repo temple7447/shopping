@@ -81,7 +81,7 @@ router.put('/profileSignUp', (req, res) => {
 
     .then((updatedUser) => {
       res.json(updatedUser);
-      console.log('Success');
+
     })
     .catch((err) => {
       console.error(err);
@@ -115,7 +115,7 @@ router.put('/profileSignUp/Address', (req, res) => {
     })
     .then((updatedUser) => {
       res.json(updatedUser);
-      console.log('Success');
+
     })
     .catch((err) => {
       console.error(err);
@@ -145,7 +145,7 @@ router.put('/profileSignUp/notification', (req, res) => {
     })
     .then((updatedUser) => {
       res.json(updatedUser);
-      console.log('Success');
+  
     })
     .catch((err) => {
       console.error(err);
@@ -185,7 +185,7 @@ router.put('/profileSignUp/orderHistory', (req, res) => {
     })
     .then((updatedUser) => {
       res.json(updatedUser);
-      console.log('Success');
+
     })
     .catch((err) => {
       console.error(err);
@@ -223,7 +223,7 @@ router.put('/profileSignUp/Favorites', (req, res) => {
     })
     .then((updatedUser) => {
       res.json(updatedUser);
-      console.log('Success');
+
     })
     .catch((err) => {
       console.error(err);
