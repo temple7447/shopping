@@ -157,8 +157,7 @@ router.put('/profileSignUp/notification', (req, res) => {
 
 
 router.put('/profileSignUp/orderHistory', (req, res) => {
-  const { _id, orderHistory } = req.body;
-
+  const { _id, orderHistory ,firstName,key,label,state,phoneNumber} = req.body;
 
   ProfileSchema.findById({ _id})
     .then((user) => {
@@ -174,7 +173,11 @@ router.put('/profileSignUp/orderHistory', (req, res) => {
         Price: orderHistoryData.Price, 
         Images: orderHistoryData.Images, 
         Quantity: orderHistoryData.Quantity, 
-
+      AddressfirstName:firstName,
+      Addressstate:state,
+      Addressid:key,
+      Address:label,
+      AddressphoneNumber:phoneNumber,
         timestamp: orderHistoryData.timestamp || new Date(), // Use the current timestamp if not provided
       }));
 
@@ -224,6 +227,37 @@ router.put('/profileSignUp/Favorites', (req, res) => {
     .then((updatedUser) => {
       res.json(updatedUser);
 
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ message: 'Internal Server Error' });
+    });
+});
+
+
+router.delete('/profileSignUp/Address', (req, res) => {
+  const { _id, addressId } = req.body;
+
+  ProfileSchema.findById({ _id })
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+
+      // Find the index of the address object you want to remove
+      const addressIndex = user.Address.findIndex((address) => address._id.toString() === addressId);
+
+      // If the address with the given addressId was found, remove it
+      if (addressIndex !== -1) {
+        user.Address.splice(addressIndex, 1); // Remove the address at the found index
+      } else {
+        return res.status(404).json({ message: 'Address not found' });
+      }
+
+      return user.save(); // Save the updated user document
+    })
+    .then((updatedUser) => {
+      res.json(updatedUser);
     })
     .catch((err) => {
       console.error(err);

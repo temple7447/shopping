@@ -25,11 +25,16 @@ const orderHistorySchema = new Schema({
   Price:Number,
   Images: [String],
   Quantity: Number,
+  AddressfirstName:String,
+  Addressstate:String,
+  Address:String,
+  AddressphoneNumber:String,
   timestamp: {
     type: Date,
     default: Date.now,
   },
 });
+
 
 const FavoritesSchema = new Schema({
   Categories: String,

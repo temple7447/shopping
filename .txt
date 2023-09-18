@@ -1,0 +1,59 @@
+const mongoose = require('mongoose');
+
+// Define a Mongoose schema for the combined data structure
+const combinedSchema = new mongoose.Schema({
+  Categories: String,
+  SubCategories: String,
+  Description: String,
+  Title: String,
+  Price: Number,
+  Images: [String],
+  Quantity: Number,
+  timestamp: {
+    type: Date,
+    default: Date.now,
+  },
+  firstName: String,
+  key: String,
+  label: String,
+  phoneNumber: String,
+  state: String,
+});
+
+// Create a Mongoose model using the schema
+const CombinedModel = mongoose.model('Combined', combinedSchema);
+
+// Connect to MongoDB
+mongoose.connect('mongodb://localhost:27017/your-database-name', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+// Create an instance of the CombinedModel and save it to the database
+const dataToInsert = {
+  Categories: 'Agriculture',
+  SubCategories: 'Health & Energy Drinks',
+  Description: 'CHI EXOTIC PINEAPPLE & COCONUT NECTAR 1L',
+  Title: 'Chi Exotic juice',
+  Price: 1000,
+  Images: [
+    'https://firebasestorage.googleapis.com/v0/b/first-project-a5bbf.appspot.com/o/images%2F60A927F9-6323-4DBC-9E52-5005A19969E3.png?alt=media&token=3634def0-870a-48d0-90e0-2d456742994f',
+  ],
+  Quantity: 1,
+  timestamp: new Date('2023-08-08T01:34:16.870Z'),
+  firstName: 'Temple',
+  key: '6503506a6026ab56774aac60',
+  label: 'Oredo Local government, Airport Rd, Ogogugbo 300102, Benin City, Edo, Nigeria',
+  phoneNumber: '0808',
+  state: 'Delta',
+};
+
+const combinedInstance = new CombinedModel(dataToInsert);
+
+combinedInstance.save((err) => {
+  if (err) {
+    console.error('Error saving data:', err);
+  } else {
+    console.log('Data saved successfully');
+  }
+});
