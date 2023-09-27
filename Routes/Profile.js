@@ -2,55 +2,37 @@ const express = require("express")
 const router = express.Router()
 const ProfileSchema = require('../Model/Profile')
 
-router.get('/profileSignUp', (req, res) => {
-  ProfileSchema.find().then((user) => {
-    res.json(user)
-  }).catch((err) => {
-    console.log(err)
-  })
-})
+router.get('/profileSignUp', async (req, res) => {
+  try {
+    const users = await ProfileSchema.find();
+    res.json(users);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
 
 
-router.post('/profileSignUp', (req, res) => {
-  const { firstName,
-    lastName,UserName,
-    phoneNumber, Address, Notification, orderHistory, Ratings, Favorites,StateP,
-    email, imageUri } = req.body
-    console.log(req.body)
+router.post('/profileSignUp', async (req, res) => {
+  try {
+    const { firstName, lastName, UserName, phoneNumber, Address, Notification, orderHistory, Ratings, Favorites, StateP, email, imageUri } = req.body;
 
-  const NewProfile = new ProfileSchema({
-    UserName: UserName,
-    firstName: firstName,
-    lastName: lastName,
-    Address: Address,
-    phoneNumber: phoneNumber,
-    Notification: Notification,
-    orderHistory: orderHistory,
-    email: email,
-    StateP: StateP,
-    Ratings: Ratings,
-    Favorites: Favorites,
-    imageUri: imageUri,
-  })
+    console.log(req.body);
 
-  NewProfile.save({})
-    .then(() => {
-      console.log("it was successfully saved")
-      res.send("you are welcome")
-    })
-    .catch((err) => console.log("there was an error while trying to upload the code"))
-
-
-
-})
+    const newProfile = new ProfileSchema({ UserName, firstName, lastName, Address, phoneNumber, Notification, orderHistory, email, StateP, Ratings, Favorites, imageUri});
+    await newProfile.save();
+    console.log("It was successfully saved");
+    res.send("You are welcome");
+  } catch (err) {
+    console.error("There was an error while trying to upload the code:", err);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
 
 router.put("/UpdateProfile", async (req, res) => {
-  const { id, imageUri } = req.body;
-
-
-
   try {
-    // Find the profile by ID and update the imageUri field
+    const { id, imageUri } = req.body;
+
     const updatedProfile = await ProfileSchema.findByIdAndUpdate(
       id,
       { imageUri: imageUri },
@@ -71,129 +53,133 @@ router.put("/UpdateProfile", async (req, res) => {
 
 
 
-router.put('/profileSignUp', (req, res) => {
-  const { _id, firstName, lastName, imageUri,phoneNumber } = req.body;
+router.put('/profileSignUp', async (req, res) => {
+  try {
+    const { _id, firstName, lastName, imageUri, phoneNumber } = req.body;
 
-  ProfileSchema.findByIdAndUpdate({ _id}, { 
-    firstName, lastName, imageUri, phoneNumber
-  })
-   
+    const updatedUser = await ProfileSchema.findByIdAndUpdate(
+      _id,
+      { firstName, lastName, imageUri, phoneNumber },
+      { new: true } // Return the updated document
+    );
 
-    .then((updatedUser) => {
-      res.json(updatedUser);
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
 
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).json({ message: 'Internal Server Error' });
-    });
+    res.json(updatedUser);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
 });
 
 
-router.put('/profileSignUp/Address', (req, res) => {
-  const { _id, Address } = req.body;
+router.put('/profileSignUp/Address', async (req, res) => {
+  try {
+    const { _id, Address } = req.body;
 
-  ProfileSchema.findById({ _id})
-    .then((user) => {
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-      const newAddresses = Address.map((addressData) => ({
-        address: addressData.address, 
-        firstName: addressData.firstName, 
-        lastName: addressData.lastName, 
-        phoneNumber: addressData.phoneNumber, 
-        State: addressData.State, 
-        city: addressData.city, 
-        timestamp: addressData.timestamp || new Date(), // Use the current timestamp if not provided
-      }));
+    // Find the user by _id
+    const user = await ProfileSchema.findById(_id);
 
-      // Concatenate the new addresses to the existing user's Address array
-      user.Address = [...user.Address, ...newAddresses];
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
 
-      return user.save();
-    })
-    .then((updatedUser) => {
-      res.json(updatedUser);
+    const newAddresses = Address.map((addressData) => ({
+      address: addressData.address,
+      firstName: addressData.firstName,
+      lastName: addressData.lastName,
+      phoneNumber: addressData.phoneNumber,
+      State: addressData.State,
+      city: addressData.city,
+      timestamp: addressData.timestamp || new Date(), // Use the current timestamp if not provided
+    }));
 
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).json({ message: 'Internal Server Error' });
-    });
+    // Concatenate the new addresses to the existing user's Address array
+    user.Address = [...user.Address, ...newAddresses];
+
+    // Save the updated user document
+    const updatedUser = await user.save();
+
+    res.json(updatedUser);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
 });
 
 
-router.put('/profileSignUp/notification', (req, res) => {
-  const { _id, Notification } = req.body;
+router.put('/profileSignUp/notification', async (req, res) => {
+  try {
+    const { _id, Notification } = req.body;
 
-  ProfileSchema.findById({ _id})
-    .then((user) => {
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-      const newNotification = Notification.map((NotificationData) => ({
- 
-        message: NotificationData.message, 
-        timestamp: NotificationData.timestamp || new Date(), // Use the current timestamp if not provided
-      }));
+    // Find the user by _id
+    const user = await ProfileSchema.findById(_id);
 
-      // Concatenate the new addresses to the existing user's Address array
-      user.Notification = [...user.Notification, ...newNotification];
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
 
-      return user.save();
-    })
-    .then((updatedUser) => {
-      res.json(updatedUser);
-  
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).json({ message: 'Internal Server Error' });
-    });
+    const newNotifications = Notification.map((notificationData) => ({
+      message: notificationData.message,
+      timestamp: notificationData.timestamp || new Date(), // Use the current timestamp if not provided
+    }));
+
+    // Concatenate the new notifications to the existing user's Notification array
+    user.Notification = [...user.Notification, ...newNotifications];
+
+    // Save the updated user document
+    const updatedUser = await user.save();
+
+    res.json(updatedUser);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
 });
 
 
 
 
-router.put('/profileSignUp/orderHistory', (req, res) => {
-  const { _id, orderHistory ,firstName,key,label,state,phoneNumber} = req.body;
+router.put('/profileSignUp/orderHistory', async (req, res) => {
+  try {
+    const { _id, orderHistory, firstName, key, label, state, phoneNumber } = req.body;
 
-  ProfileSchema.findById({ _id})
-    .then((user) => {
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-      const neworderHistory = orderHistory.map((orderHistoryData) => ({
- 
-        Categories: orderHistoryData.Categories, 
-        SubCategories: orderHistoryData.SubCategories, 
-        Description: orderHistoryData.Description, 
-        Title: orderHistoryData.Title, 
-        Price: orderHistoryData.Price, 
-        Images: orderHistoryData.Images, 
-        Quantity: orderHistoryData.Quantity, 
-      AddressfirstName:firstName,
-      Addressstate:state,
-      Addressid:key,
-      Address:label,
-      AddressphoneNumber:phoneNumber,
-        timestamp: orderHistoryData.timestamp || new Date(), // Use the current timestamp if not provided
-      }));
+    // Find the user by _id
+    const user = await ProfileSchema.findById(_id);
 
-      // Concatenate the new addresses to the existing user's Address array
-      user.orderHistory = [...user.orderHistory, ...neworderHistory];
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
 
-      return user.save();
-    })
-    .then((updatedUser) => {
-      res.json(updatedUser);
+    const newOrderHistory = orderHistory.map((orderHistoryData) => ({
+      Categories: orderHistoryData.Categories,
+      SubCategories: orderHistoryData.SubCategories,
+      Description: orderHistoryData.Description,
+      Title: orderHistoryData.Title,
+      Price: orderHistoryData.Price,
+      Images: orderHistoryData.Images,
+      Quantity: orderHistoryData.Quantity,
+      AddressfirstName: firstName,
+      Addressstate: state,
+      Addressid: key,
+      Address: label,
+      AddressphoneNumber: phoneNumber,
+      timestamp: orderHistoryData.timestamp || new Date(), // Use the current timestamp if not provided
+    }));
 
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).json({ message: 'Internal Server Error' });
-    });
+    // Concatenate the new orderHistory to the existing user's orderHistory array
+    user.orderHistory = [...user.orderHistory, ...newOrderHistory];
+
+    // Save the updated user document
+    const updatedUser = await user.save();
+
+    res.json(updatedUser);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
 });
 
 
@@ -235,34 +221,37 @@ router.put('/profileSignUp/Favorites', (req, res) => {
 });
 
 
-router.delete('/profileSignUp/Address', (req, res) => {
-  const { _id, addressId } = req.body;
 
-  ProfileSchema.findById({ _id })
-    .then((user) => {
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
 
-      // Find the index of the address object you want to remove
-      const addressIndex = user.Address.findIndex((address) => address._id.toString() === addressId);
+router.delete('/profileSignUp/Address', async (req, res) => {
+  try {
+    const { _id, addressId } = req.body;
 
-      // If the address with the given addressId was found, remove it
-      if (addressIndex !== -1) {
-        user.Address.splice(addressIndex, 1); // Remove the address at the found index
-      } else {
-        return res.status(404).json({ message: 'Address not found' });
-      }
+    // Find the user by _id
+    const user = await ProfileSchema.findById(_id);
 
-      return user.save(); // Save the updated user document
-    })
-    .then((updatedUser) => {
-      res.json(updatedUser);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).json({ message: 'Internal Server Error' });
-    });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Find the index of the address object you want to remove
+    const addressIndex = user.Address.findIndex((address) => address._id.toString() === addressId);
+
+    // If the address with the given addressId was found, remove it
+    if (addressIndex !== -1) {
+      user.Address.splice(addressIndex, 1); // Remove the address at the found index
+    } else {
+      return res.status(404).json({ message: 'Address not found' });
+    }
+
+    // Save the updated user document
+    const updatedUser = await user.save();
+
+    res.json(updatedUser);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
 });
 
 
