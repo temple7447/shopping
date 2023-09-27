@@ -3,16 +3,25 @@ const router = express.Router()
 const mongoose = require("mongoose");
 const databaseSchema = require('../Model/Project')
 
-router.get('/upload_Categories', (req, res) => {
+// router.get('/upload_Categories', (req, res) => {
 
 
-    databaseSchema.find().then((user) => {
-        res.json(user)
-    }).catch((err) => {
-        console.log(err)
-    })
-})
+//     databaseSchema.find().then((user) => {
+//         res.json(user)
+//     }).catch((err) => {
+//         console.log(err)
+//     })
+// })
 
+
+router.get('/upload_Categories', async (req, res) => {
+    try {
+        const user = await databaseSchema.find();
+        res.json(user);
+    } catch (err) {
+        console.log(err);
+    }
+});
 
 router.post("/upload_Categories", (req, res) => {
     const { selectedOption,
