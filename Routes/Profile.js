@@ -229,7 +229,7 @@ router.put('/profileSignUp/Favorites', (req, res) => {
 
 
 
-router.delete('/profileSignUp/Address', async (req, res) => {
+router.post('/profileSignUp/Address', async (req, res) => {
   try {
     const { _id, addressId } = req.body;
 console.log(_id, addressId)
