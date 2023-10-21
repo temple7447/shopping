@@ -31,7 +31,7 @@ router.post("/upload_Categories", (req, res) => {
         price,
         shortD,
         longD,
-        downloadUrls,
+        downloadURL,
         productStatus,
         discountprice,
         totalQuantity,
@@ -40,6 +40,7 @@ router.post("/upload_Categories", (req, res) => {
     
     
     } = req.body;
+    console.log(req.body)
 
 
     const NewProduct = new databaseSchema({
@@ -48,7 +49,7 @@ router.post("/upload_Categories", (req, res) => {
         Description: shortD,
         Title: productName,
         Price: price,
-        Images: downloadUrls,
+        Images: downloadURL,
         longD:longD,
         productStatus:productStatus,
         discountprice:discountprice,
@@ -67,11 +68,11 @@ router.post("/upload_Categories", (req, res) => {
             console.log("it was successfully saved")
             res.status(200).json({message:"you are welcome"})
         })
-        .catch((err) => console.log("there was an error while trying to upload the code"))
+        .catch((err) => console.log(err))
 
 
 
-    res.send('your are welcome')
+
 })
 
 

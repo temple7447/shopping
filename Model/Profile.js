@@ -16,11 +16,16 @@ const AddressSchema = new Schema({
 
 
 
-
 const orderHistorySchema = new Schema({
   Categories: String,
   SubCategories: String,
   Description: String,
+  longD: String,
+  productStatus: String,
+  discountprice: Number,
+  totalQuantity: Number,
+  brandName: String,
+  selectColor: String,
   Title: String,
   Price:Number,
   Images: [String],

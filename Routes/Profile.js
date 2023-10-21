@@ -157,6 +157,12 @@ router.put('/profileSignUp/orderHistory', async (req, res) => {
       Categories: orderHistoryData.Categories,
       SubCategories: orderHistoryData.SubCategories,
       Description: orderHistoryData.Description,
+      longD: orderHistoryData.longD,
+      productStatus: orderHistoryData.productStatus,
+      discountprice: orderHistoryData.discountprice,
+      totalQuantity: orderHistoryData.totalQuantity,
+      brandName: orderHistoryData.brandName,
+      selectColor: orderHistoryData.selectColor,
       Title: orderHistoryData.Title,
       Price: orderHistoryData.Price,
       Images: orderHistoryData.Images,
@@ -226,7 +232,7 @@ router.put('/profileSignUp/Favorites', (req, res) => {
 router.delete('/profileSignUp/Address', async (req, res) => {
   try {
     const { _id, addressId } = req.body;
-
+console.log(_id, addressId)
     // Find the user by _id
     const user = await ProfileSchema.findById(_id);
 
@@ -248,6 +254,7 @@ router.delete('/profileSignUp/Address', async (req, res) => {
     const updatedUser = await user.save();
 
     res.json(updatedUser);
+    
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Internal Server Error' });
