@@ -14,19 +14,6 @@ const databaseSchema = require('../Model/Product')
 // })
 
 
-const [SubCategories,setSubCategories] = useState('')
-const [selectedCategories, setselectedCategories] = useState('')
-const [productName, setProductName] = useState('')
-const [price, setPrice] = useState(0)
-const [shortD, setShortD] = useState('')
-const [longD, setLongD] = useState('')
-const [Image, setImage] = useState(null)
-const [productStatus,setproductStatus] = useState('')
-const [discountprice,setdiscountprice ] = useState(0)
-const [totalQuantity, setTotalQuantity] = useState(0)
-const [brandName, setBrandName] = useState(0)
-const [selectColor, setselectColor] = useState('')
-
 
 router.get('/upload_Categories', async (req, res) => {
     try {
@@ -78,7 +65,7 @@ router.post("/upload_Categories", (req, res) => {
     NewProduct.save({})
         .then(() => {
             console.log("it was successfully saved")
-            res.send("you are welcome")
+            res.status(200).json({message:"you are welcome"})
         })
         .catch((err) => console.log("there was an error while trying to upload the code"))
 
