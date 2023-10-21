@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const mongoose = require("mongoose");
-const databaseSchema = require('../Model/Project')
+const databaseSchema = require('../Model/Product')
 
 // router.get('/upload_Categories', (req, res) => {
 
@@ -14,6 +14,20 @@ const databaseSchema = require('../Model/Project')
 // })
 
 
+const [SubCategories,setSubCategories] = useState('')
+const [selectedCategories, setselectedCategories] = useState('')
+const [productName, setProductName] = useState('')
+const [price, setPrice] = useState(0)
+const [shortD, setShortD] = useState('')
+const [longD, setLongD] = useState('')
+const [Image, setImage] = useState(null)
+const [productStatus,setproductStatus] = useState('')
+const [discountprice,setdiscountprice ] = useState(0)
+const [totalQuantity, setTotalQuantity] = useState(0)
+const [brandName, setBrandName] = useState(0)
+const [selectColor, setselectColor] = useState('')
+
+
 router.get('/upload_Categories', async (req, res) => {
     try {
         const user = await databaseSchema.find();
@@ -24,21 +38,41 @@ router.get('/upload_Categories', async (req, res) => {
 });
 
 router.post("/upload_Categories", (req, res) => {
-    const { selectedOption,
-        subselectedOption,
-        descriptionFields,
-        TitleFields,
-        priceFields,
-        downloadUrls } = req.body;
+    const { selectedCategories,
+        SubCategories,
+        productName,
+        price,
+        shortD,
+        longD,
+        downloadUrls,
+        productStatus,
+        discountprice,
+        totalQuantity,
+        brandName,
+        selectColor,
+    
+    
+    } = req.body;
 
 
     const NewProduct = new databaseSchema({
-        Categories: selectedOption,
-        SubCategories: subselectedOption,
-        Description: descriptionFields,
-        Title: TitleFields,
-        Price: priceFields,
-        Images: downloadUrls
+        Categories: selectedCategories,
+        SubCategories: SubCategories,
+        Description: shortD,
+        Title: productName,
+        Price: price,
+        Images: downloadUrls,
+        longD:longD,
+        productStatus:productStatus,
+        discountprice:discountprice,
+        totalQuantity:totalQuantity,
+        brandName:brandName,
+        selectColor:selectColor
+
+
+
+
+
     })
 
     NewProduct.save({})
