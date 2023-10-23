@@ -37,7 +37,7 @@ router.post("/upload_Categories", (req, res) => {
         totalQuantity,
         brandName,
         selectColor,
-    
+    productStatusState
     
     } = req.body;
 
@@ -52,6 +52,7 @@ router.post("/upload_Categories", (req, res) => {
         Images: downloadURL,
         longD:longD,
         productStatus:productStatus,
+        productStatusState:productStatusState,
         discountprice:discountprice,
         totalQuantity:totalQuantity,
         brandName:brandName,
