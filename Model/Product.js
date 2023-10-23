@@ -11,7 +11,7 @@ const databaseSchema = new Schema({
     selectColor: { type: String, required: true },
     SubCategories: { type: String, required: true },
     Description: { type: String, required: true },
-    productStatus: { type: String, required: true },
+    productStatus: { type: Boolean, required: true },
     longD: { type: String, required: true },
     Title: { type: String, required: true },
     Price: { type: Number, required: true },

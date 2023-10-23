@@ -40,7 +40,7 @@ router.post("/upload_Categories", (req, res) => {
     
     
     } = req.body;
-    console.log(req.body)
+
 
 
     const NewProduct = new databaseSchema({
