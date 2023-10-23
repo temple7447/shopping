@@ -80,15 +80,16 @@ router.post("/upload_Categories", (req, res) => {
 
 router.post('/upload_Categories/delete', (req, res) => {
     // console.log(req.body)
-    const { id } = req.body
+    const { _id } = req.body
+    console.log(_id)
 
-    databaseSchema.findOneAndDelete({ _id: id })
+    databaseSchema.findOneAndDelete({ _id })
         .then((user) => {
             if (user) {
-                console.log("item deleted")
+               res.status(201).json({message:'It was successfully Deleted'})
             }
             else {
-                console.log("item does not exist")
+                res.json({message:"item does not exist"})
             }
 
         })
