@@ -81,7 +81,7 @@ router.post("/upload_Categories", (req, res) => {
 router.post('/upload_Categories/delete', (req, res) => {
     // console.log(req.body)
     const { _id } = req.body
-    console.log(_id)
+    
 
     databaseSchema.findOneAndDelete({ _id })
         .then((user) => {
@@ -161,16 +161,23 @@ router.put("/CartList",async (req, res)=>{
     const {SubCategories, _id} = req.body
   
 console.log(req.body)
+try {
+    const cart = await CarlistSchema.findById(_id);
+  
+     if (!cart) {
+            return res.status(404).json({ message: 'Cart Already Exited' });
+          }
+    cart.SubCategories = [...cart.SubCategories, SubCategories]
+    const updatedUser = await cart.save();   
+          res.status(200).json({ message: 'Items added to SubCategories array successfully', updatedUser });
+          console.log(cart)
+      
+}catch (error){
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+}
 
-    // const CartList = new CarlistSchema({
-    //     Categories
-    // })
- 
-    // CartList.save({})
-    // .then((resp)=>{
-    //     console.log("sent")
-    //     res.status(200).json({message: resp})
-    // }).catch((err)=> res.status(500).json({ message:"not Saved Try again"}))
+
   
   })
 
