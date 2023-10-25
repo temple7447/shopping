@@ -9,6 +9,7 @@ const databaseSchema = new Schema({
     Categories: { type: String, required: true },
     brandName: { type: String, required: true },
     selectColor: { type: String, required: true },
+    selectedOption: { type: String, required: true },
     SubCategories: { type: String, required: true },
     Description: { type: String, required: true },
     productStatus: { type: String, required: true },
