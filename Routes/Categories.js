@@ -80,6 +80,67 @@ router.post("/upload_Categories", (req, res) => {
 
 
 
+
+
+router.post("/upload_Categories/edit", async (req, res) => {
+    try {
+    const { selectedCategories,
+        SubCategories,
+        productName,
+        price,
+        shortD,
+        longD,
+        downloadURL,
+        productStatus,
+        discountprice,
+        totalQuantity,
+        brandName,
+        selectColor,
+    productStatusState,
+    selectedOption,
+    _id
+    
+    } = req.body;
+
+    console.log(req.body)
+
+    const EditProduct = {
+        Categories: selectedCategories,
+        SubCategories: SubCategories,
+        Description: shortD,
+        Title: productName,
+        Price: price,
+        Images: downloadURL,
+        longD:longD,
+        productStatus:productStatus,
+        productStatusState:productStatusState,
+        discountprice:discountprice,
+        totalQuantity:totalQuantity,
+        brandName:brandName,
+        selectColor:selectColor,
+        selectedOption:selectedOption
+    }
+
+    const updatedProduct = await databaseSchema.findByIdAndUpdate(
+      _id,
+      EditProduct,
+      { new: true } // Return the updated document
+    );
+
+
+    if (!updatedProduct) {
+        return res.status(404).json({ error: "Profile not found" });
+      }
+  
+      res.json(updatedProduct);
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+})
+
+
+
 router.post('/upload_Categories/delete', (req, res) => {
     // console.log(req.body)
     const { _id } = req.body
