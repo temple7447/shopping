@@ -97,10 +97,36 @@ router.post('/upload_Categories/delete', (req, res) => {
             console.log(err)
         })
 })
+
+
+
+
+router.post('/upload_Categories/status' ,async (req, res) => {
+    // console.log(req.body)
+    try {
+    const { _id,productStatusvalue } = req.body
+
+//  console.log(req.body)
+
+    const updatedProfile = await databaseSchema.findByIdAndUpdate({_id},{productStatusState:productStatusvalue} , { new: true } )
+
+    if (!updatedProfile) {
+        return res.status(404).json({ error: "Profile not found" });
+      }
+  
+      res.json(updatedProfile);
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+        
+})
+
+
 router.post('/upload_Categories/listadd', (req, res) => {
     // console.log(req.body)
     const { _id } = req.body
-    console.log(_id)
+ 
 
     databaseSchema.findOneAndDelete({ _id })
         .then((user) => {
