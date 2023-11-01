@@ -38,7 +38,8 @@ router.post("/upload_Categories", (req, res) => {
         brandName,
         selectColor,
     productStatusState,
-    selectedOption
+    selectedOption,
+    View
     
     } = req.body;
 
@@ -52,10 +53,12 @@ router.post("/upload_Categories", (req, res) => {
         Price: price,
         Images: downloadURL,
         longD:longD,
+        
         productStatus:productStatus,
         productStatusState:productStatusState,
         discountprice:discountprice,
         totalQuantity:totalQuantity,
+        View:View,
         brandName:brandName,
         selectColor:selectColor,
         selectedOption:selectedOption
@@ -94,6 +97,7 @@ router.post("/upload_Categories/edit", async (req, res) => {
         productStatus,
         discountprice,
         totalQuantity,
+        View,
         brandName,
         selectColor,
     productStatusState,
@@ -116,6 +120,7 @@ router.post("/upload_Categories/edit", async (req, res) => {
         productStatusState:productStatusState,
         discountprice:discountprice,
         totalQuantity:totalQuantity,
+        View:View,
         brandName:brandName,
         selectColor:selectColor,
         selectedOption:selectedOption
