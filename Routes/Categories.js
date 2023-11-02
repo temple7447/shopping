@@ -39,7 +39,8 @@ router.post("/upload_Categories", (req, res) => {
         selectColor,
     productStatusState,
     selectedOption,
-    View
+    View,
+    Specificationobject
     
     } = req.body;
 
@@ -53,7 +54,7 @@ router.post("/upload_Categories", (req, res) => {
         Price: price,
         Images: downloadURL,
         longD:longD,
-        
+        Specificationobject:Specificationobject,
         productStatus:productStatus,
         productStatusState:productStatusState,
         discountprice:discountprice,

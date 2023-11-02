@@ -15,6 +15,7 @@ const databaseSchema = new Schema({
     productStatus: { type: String, required: true },
     productStatusState: { type: Boolean, required: true },
     longD: { type: String, required: true },
+    Specificationobject: { type:  { type: String, required: true}},
     Title: { type: String, required: true },
     Price: { type: Number, required: true },
     totalQuantity: { type: Number, required: true },
