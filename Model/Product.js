@@ -21,7 +21,7 @@ const databaseSchema = new Schema({
     totalQuantity: { type: Number, required: true },
     discountprice: { type: Number, required: true },
     Quantity: { type: Number, required: true , default :0 },
-    View: { type: Number, required: true , default :0 },
+    View: { type: Number , default :0 },
     Images: { type: [String], required: true },
     createdAt: { type: Date, default: Date.now },
 
