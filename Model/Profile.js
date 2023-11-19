@@ -68,7 +68,7 @@ const ProfileSchema = new Schema({
   firstName: { type: String },
   lastName: { type: String  },
   UserName: { type: String, required: true },
-  phoneNumber: { type: String, required: true },
+  phoneNumber: { type: Number, required: true },
   email: { type: String, required: true },
   Ratings: { type: String },
   StateP: { type: String },

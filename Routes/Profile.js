@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const ProfileSchema = require('../Model/Profile')
+const  { SignupPut, SignupPost } =  require("../Controller/Auth")
 
 router.get('/profileSignUp', async (req, res) => {
   try {
@@ -13,21 +14,7 @@ router.get('/profileSignUp', async (req, res) => {
 });
 
 
-router.post('/profileSignUp', async (req, res) => {
-  try {
-    const { firstName, lastName, UserName, phoneNumber, Address, Notification, orderHistory, Ratings, Favorites, StateP, email, imageUri } = req.body;
-
-    console.log(req.body);
-
-    const newProfile = new ProfileSchema({ UserName, firstName, lastName, Address, phoneNumber, Notification, orderHistory, email, StateP, Ratings, Favorites, imageUri});
-    await newProfile.save();
-    console.log("It was successfully saved");
-    res.send("You are welcome");
-  } catch (err) {
-    console.error("There was an error while trying to upload the code:", err);
-    res.status(500).json({ message: 'Internal Server Error' });
-  }
-});
+router.post('/profileSignUp', SignupPost);
 
 router.put("/UpdateProfile", async (req, res) => {
   try {
@@ -53,26 +40,7 @@ router.put("/UpdateProfile", async (req, res) => {
 
 
 
-router.put('/profileSignUp', async (req, res) => {
-  try {
-    const { _id, firstName, lastName, imageUri, phoneNumber } = req.body;
-
-    const updatedUser = await ProfileSchema.findByIdAndUpdate(
-      _id,
-      { firstName, lastName, imageUri, phoneNumber },
-      { new: true } // Return the updated document
-    );
-
-    if (!updatedUser) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    res.json(updatedUser);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Internal Server Error' });
-  }
-});
+router.put('/profileSignUp',  SignupPut);
 
 
 router.put('/profileSignUp/Address', async (req, res) => {

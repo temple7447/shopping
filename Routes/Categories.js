@@ -2,7 +2,8 @@ const express = require("express")
 const router = express.Router()
 const mongoose = require("mongoose");
 const databaseSchema = require('../Model/Product')
-const CarlistSchema = require('../Model/Catlist')
+const CarlistSchema = require('../Model/Catlist');
+const { CategorisePutRequest } = require("../Controller/Categories");
 // router.get('/upload_Categories', (req, res) => {
 
 
@@ -275,29 +276,7 @@ const SubCategories = []
   })
 
 
-router.put("/CartList",async (req, res)=>{
-    const {SubCategories, _id} = req.body
-  
-console.log(req.body)
-try {
-    const cart = await CarlistSchema.findById(_id);
-  
-     if (!cart) {
-            return res.status(404).json({ message: 'Cart Already Exited' });
-          }
-    cart.SubCategories = [...cart.SubCategories, SubCategories]
-    const updatedUser = await cart.save();   
-          res.status(200).json({ message: 'Items added to SubCategories array successfully', updatedUser });
-          console.log(cart)
-      
-}catch (error){
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
-}
-
-
-  
-  })
+router.put("/CartList", CategorisePutRequest )
 
 
 module.exports =  router

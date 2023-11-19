@@ -2,7 +2,6 @@ const express = require("express")
 const app = express()
 const dotenv = require('dotenv').config()
 const mongoose = require("mongoose");
-const axios = require("axios")
 require("./config/db")
 const cors = require('cors');
 const options = require('./Data/Categories')
@@ -10,8 +9,6 @@ const ProfileSchema = require('./Model/Profile')
 const Order = require('./Routes/Order')
 const Profile = require('./Routes/Profile')
 const Categories = require('./Routes/Categories')
-
-
 
 
 
