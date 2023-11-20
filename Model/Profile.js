@@ -32,6 +32,7 @@ const orderHistorySchema = new Schema({
   Quantity: Number,
   AddressfirstName:String,
   Addressstate:String,
+  transaction_id:String,
   Address:String,
   AddressphoneNumber:String,
   timestamp: {

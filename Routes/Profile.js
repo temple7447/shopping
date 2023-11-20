@@ -112,8 +112,10 @@ router.put('/profileSignUp/notification', async (req, res) => {
 
 router.put('/profileSignUp/orderHistory', async (req, res) => {
   try {
-    const { _id, orderHistory, firstName, key, label, state, phoneNumber } = req.body;
+    const { _id, orderHistory, firstName, key, label, state, phoneNumber, transaction_id} = req.body;
 
+
+    console.log(req.body)
     // Find the user by _id
     const user = await ProfileSchema.findById(_id);
 
@@ -140,6 +142,7 @@ router.put('/profileSignUp/orderHistory', async (req, res) => {
       Addressid: key,
       Address: label,
       AddressphoneNumber: phoneNumber,
+      transaction_id: transaction_id,
       timestamp: orderHistoryData.timestamp || new Date(), // Use the current timestamp if not provided
     }));
 
