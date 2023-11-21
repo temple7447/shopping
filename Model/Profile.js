@@ -33,6 +33,7 @@ const orderHistorySchema = new Schema({
   AddressfirstName:String,
   Addressstate:String,
   transaction_id:String,
+  OrderStatus:String,
   Address:String,
   AddressphoneNumber:String,
   timestamp: {

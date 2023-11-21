@@ -112,7 +112,7 @@ router.put('/profileSignUp/notification', async (req, res) => {
 
 router.put('/profileSignUp/orderHistory', async (req, res) => {
   try {
-    const { _id, orderHistory, firstName, key, label, state, phoneNumber, transaction_id} = req.body;
+    const { _id, orderHistory, firstName, key, label, state, phoneNumber, transaction_id, OrderStatus} = req.body;
 
 
     console.log(req.body)
@@ -141,6 +141,7 @@ router.put('/profileSignUp/orderHistory', async (req, res) => {
       Addressstate: state,
       Addressid: key,
       Address: label,
+      OrderStatus:OrderStatus,
       AddressphoneNumber: phoneNumber,
       transaction_id: transaction_id,
       timestamp: orderHistoryData.timestamp || new Date(), // Use the current timestamp if not provided
