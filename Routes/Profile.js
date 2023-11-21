@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 const ProfileSchema = require('../Model/Profile')
 const  { SignupPut, SignupPost } =  require("../Controller/Auth")
+const Testme = require("../Model/Test")
 
 router.get('/profileSignUp', async (req, res) => {
   try {
@@ -235,6 +236,26 @@ console.log(_id, addressId)
 
 
 
+
+
+router.post('/test', async (req, res)=>{
+
+  const { name } = req.body
+
+// const user = await Testme.findOne({name})
+// if(user){
+// console.log("user find")
+// }
+const saveme = new Testme({
+  name
+})
+
+ const resp = await saveme.save()
+res.send(resp)
+
+
+
+})
 
 
 
