@@ -235,7 +235,42 @@ console.log(_id, addressId)
 });
 
 
+router.post('/profileSignUp/OrderCompleted', async (req, res)=>{
 
+  try {
+    
+ 
+  const { _id, OrderStatus, userId} = req.body
+console.log(_id, userId)
+
+const user = await ProfileSchema.findById({_id:userId} )
+
+if (!user) {
+  return res.status(404).json({ error: 'User not found' });
+}
+
+const orderHistory = user.orderHistory
+const newOrderUpdate =  orderHistory.find((item)=> item._id.toString() === _id)
+
+console.log("me", newOrderUpdate.OrderStatus)
+
+newOrderUpdate.OrderStatus = OrderStatus;
+
+await user.save();
+
+console.log("Updated OrderStatus:", newOrderUpdate.OrderStatus);
+
+// Send a response if needed
+res.status(200).json({ message: 'OrderStatus updated successfully' });
+
+
+} catch (error) {
+  console.error(error);
+  res.status(500).json({ error: 'Internal Server Error' });
+}
+
+
+})
 
 
 router.post('/test', async (req, res)=>{
